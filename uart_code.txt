@@ -1,0 +1,48 @@
+#include<Team_4.h>
+#include<LPC21xx.h>
+
+void configure_baudrate (unsigned int baud, float clock);
+
+void configure_data_width (unsigned char data_length );
+
+void configure_stop_bit (float stop);
+
+void configure_parity (unsigned int enable, unsigned int set_e_o);
+
+unsigned int transmit_data (unsigned char data);
+
+unsigned int receive_data ();
+
+void configure_pin(unsigned int pin);
+
+void configure_DLAB(unsigned int Dlab);
+
+
+int main()
+
+{
+unsigned char msg[]; // data to be sent
+
+unsigned int a,b;
+
+configure_pin(0x05); // configure Tx Rx of UART0
+
+configure_DLAB(0x80); // enable DLAB
+
+configure_data_width (0x03); // 8 bit character lenght
+
+configure_baudrate (9600, 20000000.0); //20MHz  // set baud rate
+
+configure_stop_bit (1.0); // 0x04 value or 1.0
+
+configure_parity (0x08, 0x10); // enable parity and set it to even parity
+
+// to transmit data DLAB must be zero
+configure_DLAB(0x00); // disable DLAB
+
+a =transmit_data (msg[]); // THRE will be checked inside function returns(contains data-> returns 0) or ( empty-> returns 1)
+
+b = unsigned int receive_data (); //waits until the receiver (U0LSR bit 0) contains data and then stores the result in 'b' after checking the status resistor for error later the data. 
+
+a =transmit_data (b);
+}
